@@ -20,10 +20,12 @@ def main():
 def files_menu():
     option = create_menu("Files", "1. Create new files\n2. Write to file")
     if option == 1:
-        util.create_file()
+        util.create_files()
 
 def folders_menu():
-    option = create_menu("Folders", "1. Create new folders")
+    option = create_menu("Folders", "1. Create new folders\n2. Add files to folder")
+    if option == 1:
+        util.create_folders()
 
 def create_menu(title, choices):
     title = figlet_format(title, "smslant")
