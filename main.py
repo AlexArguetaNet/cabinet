@@ -23,32 +23,37 @@ def files_menu():
     option = create_menu("Files", "1. Create new files\n2. Write to file")
     if option == 1:
         path_name = get_path("files")
-        num_of_files = get_num_of("files")
-        file_names = get_names(num_of_files, "file")
-        create_files(path_name, num_of_files, file_names)
+        file_names = get_names(path_name, "file")
+        create_files(path_name, file_names)
 
 def folders_menu():
     option = create_menu("Folders", "1. Create new folders\n2. Add files to folder")
     if option == 1:
-        create_folders()
+        path_name = get_path("folders")
+        folder_names = get_names(path_name, "folder")
+        create_folders(path_name, folder_names)
 
-def get_names(n, s):
-    file_names = []
-    for _ in range(n):
-        try:
-            name = input(f"Enter {s} name: ")
-            file_names.append(name)
-        except ValueError:
-            continue
-    return file_names
-
-def get_num_of(s):
+def get_names(path_name, s):
+    names = []
+    print(f"Enter {s} names. Enter '.' to continue.")
     while True:
         try:
-            num_of_files = int(input("How many {s}? "))
-            return num_of_files
+            name = input(f"{s}: ")
+            if name == ".":
+                return names
+            
+            if (os.path.exists(f"{path_name}/{name}")) or (name in names):
+                print("\n*********************")
+                print(f"{s} already exists")
+                print("*********************\n")
+                continue
+            else:
+                names.append(name)
+
         except ValueError:
             continue
+        except KeyboardInterrupt:
+            sys.exit()
 
 def get_path(s):
     while True:

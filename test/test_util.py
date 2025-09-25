@@ -1,17 +1,15 @@
 
-import builtins
 import os
-from util import create_files, create_folders, get_path
+from util import create_files, create_folders
 
 def test_create_files():
-    assert create_files() == True
+    names = ["f1", "f2", "-3123aFmei", "-.."]
+    assert create_files(os.getcwd(), names) == True
+    for i in names:
+        os.remove(f"{os.getcwd()}/{i}")
 
 def test_create_folders():
-    assert create_folders() == True
-
-def test_get_path(monkeypatch):
-
-    monkeypatch.setattr(builtins, "input", lambda _: os.getcwd())
-    result = get_path("Files")
-
-    assert result == os.getcwd()
+    names = ["games", "my-files", "py"]
+    assert create_folders(os.getcwd(), names) == True
+    for i in names:
+        os.removedirs(f"{os.getcwd()}/{i}")
