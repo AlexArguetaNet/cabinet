@@ -3,13 +3,13 @@ import os
 from util import create_files, create_folders
 
 def test_create_files():
-    names = ["f1", "f2", "-3123aFmei", "-.."]
-    assert create_files(os.getcwd(), names) == True
-    for i in names:
-        os.remove(f"{os.getcwd()}/{i}")
+    paths = [f"{os.getcwd()}/f1", f"{os.getcwd()}/f2", f"{os.getcwd()}/-3123aFmei", f"{os.getcwd()}/-.."]
+    assert create_files(paths) == True
+    for path in paths:
+        os.remove(path)
 
 def test_create_folders():
-    names = ["games", "my-files", "py"]
-    assert create_folders(os.getcwd(), names) == True
-    for i in names:
-        os.removedirs(f"{os.getcwd()}/{i}")
+    paths = [f"{os.getcwd()}/games", f"{os.getcwd()}/my-files", f"{os.getcwd()}/py"]
+    assert create_folders(paths) == True
+    for path in paths:
+        os.removedirs(path)
