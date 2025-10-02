@@ -7,7 +7,7 @@ def test_create_files(fs):
     assert create_files(paths) == True
 
     for path in paths:
-        assert fs.exists(path)
+        assert fs.exists(path) == True
 
 def test_validate_path_is_valid(fs):
     path = "/test-path"
@@ -21,10 +21,10 @@ def test_path_exists_true(fs):
     path = "/test-folder"
     fs.create_dir(path)
     assert path_exists(path, [], "folders") == True
-    assert path_exists(path, ["/home/user/Documents", "/test-folder"]) == True
+    assert path_exists(path, ["/home/user/Documents", "/test-folder"], "folders") == True
 
 def test_path_exists_false(fs):
     path = "/test-folder"
     assert path_exists(path, [], "folders") == False
-    assert path_exists(path, ["/home/user/Documents"]) == False
+    assert path_exists(path, ["/home/user/Documents"], "folders") == False
     
