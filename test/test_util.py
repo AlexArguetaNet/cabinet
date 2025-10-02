@@ -1,10 +1,16 @@
 
-import os
 from util import create_files, create_folders, validate_path, path_exists
 
 def test_create_files(fs):
     paths = ["/f1", "/f2", "/-3123aFmei", "/-.."]
     assert create_files(paths) == True
+
+    for path in paths:
+        assert fs.exists(path) == True
+
+def test_create_folders(fs):
+    paths = ["/folder1", "/folder2", "/games", "/hw"]
+    assert create_folders(paths) == True
 
     for path in paths:
         assert fs.exists(path) == True
