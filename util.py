@@ -41,3 +41,15 @@ def create_menu(title, choices):
     menu_option = int(input("Choose an option: "))
     return menu_option
 
+def write_to_file(file_path):
+    try:
+        with open(file_path, "w") as file:
+            while True:
+                try:
+                    line = input()
+                    file.write(f"{line}\n")
+                except KeyboardInterrupt:
+                    return True
+    except IsADirectoryError:
+        print("Directory entered")
+        return False
