@@ -5,3 +5,4 @@ pyfakefs==5.9.3
 pyfiglet==1.0.4
 Pygments==2.19.2
 pytest==8.4.2
+simple-term-menu==1.6.6

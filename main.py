@@ -1,18 +1,18 @@
 
-from util import create_files, create_folders, validate_path, path_exists, create_menu
-from util import write_to_file
+from util import create_files, create_folders, validate_path, path_exists
+from util import write_to_file, create_menu
 import os
 import sys
 
 def main():
     while True:
         try:
-            option = create_menu("Cabinet", "1. New File\n2. New Folder\n3. Quit")
-            if option == 1:
+            option = create_menu("Cabinet", ["New File", "New Folder", "Quit"])
+            if option == 0:
                 files_menu()
-            elif option == 2:
+            elif option == 1:
                 folders_menu()
-            elif option == 3:
+            elif option == 2:
                 break
             else:
                 continue
@@ -20,21 +20,21 @@ def main():
             continue
 
 def files_menu():
-    option = create_menu("Files", "1. Create new files\n2. Write to file")
-    if option == 1:
+    option = create_menu("Files", ["Create new files", "Write to file"])
+    if option == 0:
         print("Enter path to create files: ", end="")
         path_name = get_path()
         file_paths = get_new_paths(path_name, "file")
         create_files(file_paths)
-    elif option == 2:
+    elif option == 1:
         # TODO: Check if path is a directory or a file
         file_path = input("Enter file path: ")
         write_to_file(file_path)
 
 
 def folders_menu():
-    option = create_menu("Folders", "1. Create new folders\n2. Add files to folder")
-    if option == 1:
+    option = create_menu("Folders", ["Create new folders", "Add files to folder"])
+    if option == 0:
         print("Enter path to create folders: ", end="")
         path_name = get_path()
         folder_paths = get_new_paths(path_name, "folder")

@@ -1,5 +1,6 @@
 import os
 from pyfiglet import figlet_format
+from simple_term_menu import TerminalMenu
 
 def create_files(paths):
 
@@ -34,12 +35,6 @@ def path_exists(path, paths, s):
         return True
     else:
         return False
-    
-def create_menu(title, choices):
-    title = figlet_format(title, "smslant")
-    print(f"\n{title}{choices}")
-    menu_option = int(input("Choose an option: "))
-    return menu_option
 
 def write_to_file(file_path):
     try:
@@ -53,3 +48,8 @@ def write_to_file(file_path):
     except IsADirectoryError:
         print("Directory entered")
         return False
+    
+def create_menu(title, menu_options):
+    menu = TerminalMenu(menu_options, title=figlet_format(title, "smslant"))
+    selected_index = menu.show()
+    return selected_index
