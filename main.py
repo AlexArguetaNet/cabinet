@@ -1,6 +1,6 @@
 
 from util import create_files, create_folders, validate_path, path_exists
-from util import write_to_file, create_menu
+from util import write_to_file, create_menu, clear
 import os
 import sys
 
@@ -18,19 +18,22 @@ def main():
                 continue
         except ValueError:
             continue
+    
+    clear()
 
 def files_menu():
     option = create_menu("Files", ["Create new files", "Write to file", "Back"])
     if option == 0:
         print("Enter path to create files: ", end="")
         path_name = get_path()
+        if path_name == None: return
         file_paths = get_new_paths(path_name, "file")
         create_files(file_paths)
     elif option == 1:
         file_path = input("Enter file path: ")
         write_to_file(file_path)
     else:
-        pass
+        return
 
 
 def folders_menu():
@@ -38,6 +41,7 @@ def folders_menu():
     if option == 0:
         print("Enter path to create folders: ", end="")
         path_name = get_path()
+        if path_name == None: return
         folder_paths = get_new_paths(path_name, "folder")
         create_folders(folder_paths)
     elif option == 1:
@@ -54,7 +58,7 @@ def get_path():
                 return path_name
 
         except KeyboardInterrupt:
-            sys.exit()
+            return None
 
 def get_new_paths(path, s):
     paths = []
@@ -72,7 +76,7 @@ def get_new_paths(path, s):
         except ValueError:
             continue
         except KeyboardInterrupt:
-            sys.exit()
+            return
 
 
 if __name__ == "__main__":

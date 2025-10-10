@@ -1,4 +1,5 @@
 import os
+import sys
 from pyfiglet import figlet_format
 from simple_term_menu import TerminalMenu
 
@@ -53,3 +54,9 @@ def create_menu(title, menu_options):
     menu = TerminalMenu(menu_options, title=figlet_format(title, "smslant"))
     selected_index = menu.show()
     return selected_index
+
+def clear():
+    if sys.platform.startswith("win"):
+        os.system("cls")
+    else:
+        os.system("clear")
