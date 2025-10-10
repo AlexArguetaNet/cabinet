@@ -60,3 +60,18 @@ def clear():
         os.system("cls")
     else:
         os.system("clear")
+
+def success_prompt(path, names, s):
+    clear()
+    names_str = ""
+    for name in names:
+        names_str = f"{names_str}\n- {name}"
+
+    menu = TerminalMenu(["Continue", "Exit"], 
+                        title=f"Success!\nThe following {s} have been created in {path}:{names_str}")
+    selected_index = menu.show()
+
+    if selected_index == 0:
+        return
+    else:
+        sys.exit()

@@ -1,8 +1,5 @@
-
 from util import create_files, create_folders, validate_path, path_exists
-from util import write_to_file, create_menu, clear
-import os
-import sys
+from util import write_to_file, create_menu, clear, success_prompt
 
 def main():
     while True:
@@ -27,8 +24,9 @@ def files_menu():
         print("Enter path to create files: ", end="")
         path_name = get_path()
         if path_name == None: return
-        file_paths = get_new_paths(path_name, "file")
+        file_paths, names = get_new_paths(path_name, "file")
         create_files(file_paths)
+        success_prompt(path_name, names, "files")
     elif option == 1:
         file_path = input("Enter file path: ")
         write_to_file(file_path)
@@ -42,8 +40,9 @@ def folders_menu():
         print("Enter path to create folders: ", end="")
         path_name = get_path()
         if path_name == None: return
-        folder_paths = get_new_paths(path_name, "folder")
+        folder_paths, names = get_new_paths(path_name, "folder")
         create_folders(folder_paths)
+        success_prompt(path_name, names, "folders")
     elif option == 1:
         # TODO: Implement function to add files to a new folder
         pass
@@ -62,14 +61,16 @@ def get_path():
 
 def get_new_paths(path, s):
     paths = []
+    names = []
     while True:
         try:
             name = input(f"{s}: ")
             if name == ".":
-                return paths
+                return paths, names
             
             if not path_exists(f"{path}/{name}", paths, s):
                 paths.append(f"{path}/{name}")
+                names.append(name)
             else:
                 continue
 
