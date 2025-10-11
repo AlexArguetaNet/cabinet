@@ -2,6 +2,7 @@ from util import create_files, create_folders, validate_path, path_exists
 from util import write_to_file, create_menu, clear, success_prompt, get_common_paths
 
 def main():
+    clear() # Clear terminal (For aesthetic purposes ;D)
     while True:
         try:
             option = create_menu("Cabinet", ["New File", "New Folder", "Quit"])
@@ -22,11 +23,16 @@ def files_menu():
     option = create_menu("Files", ["Create new files", "Write to file", "Back"])
     if option == 0:
         path_name = get_path()
-        if path_name == None: return
+        if path_name == None:
+            clear() 
+            return
+        
         print("Enter file names below:\n")
         file_paths, names = get_new_paths(path_name, "file")
 
-        if file_paths == None: return
+        if file_paths == None: 
+            clear()
+            return
         create_files(file_paths)
         success_prompt(path_name, names, "files")
     elif option == 1:
@@ -39,11 +45,16 @@ def folders_menu():
     option = create_menu("Folders", ["Create new folders", "Add files to folder", "Back"])
     if option == 0:
         path_name = get_path()
-        if path_name == None: return
+        if path_name == None: 
+            clear()
+            return
+        
         print("Enter folder names below:\n")
         folder_paths, names = get_new_paths(path_name, "folder")
 
-        if folder_paths == None: return
+        if folder_paths == None:
+            clear() 
+            return
         create_folders(folder_paths)
         success_prompt(path_name, names, "folders")
     elif option == 1:
@@ -55,13 +66,13 @@ def folders_menu():
 def get_path():
     common_paths = get_common_paths()
     selected_option = create_menu("Enter path", common_paths)
-
-    if selected_option == 5:
+    
+    if selected_option == 5 or selected_option == None:
         return None
     elif selected_option == 4:
         while True:
             try:
-                path_name = input()  
+                path_name = input("Enter custom path: ")  
                 if validate_path(path_name) != None:
                     return path_name
     
@@ -89,7 +100,7 @@ def get_new_paths(path, s):
         except ValueError:
             continue
         except KeyboardInterrupt:
-            return None
+            return [None, None]
 
 
 if __name__ == "__main__":

@@ -24,7 +24,7 @@ def validate_path(path_name):
     if not os.path.exists(path_name) or not os.access(path_name, os.W_OK):
         print("\n*****************")
         print("Directory invalid")
-        print("*****************")
+        print("*****************\n")
         return None 
     else:
         return path_name
@@ -52,9 +52,12 @@ def write_to_file(file_path):
         return False
     
 def create_menu(title, menu_options):
-    menu = TerminalMenu(menu_options, title=figlet_format(title, "smslant"))
-    selected_index = menu.show()
-    return selected_index
+    try:
+        menu = TerminalMenu(menu_options, title=figlet_format(title, "smslant"))
+        selected_index = menu.show()
+        return selected_index
+    except KeyboardInterrupt:
+        return None
 
 def clear():
     if sys.platform.startswith("win"):
