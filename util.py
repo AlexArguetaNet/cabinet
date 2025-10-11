@@ -2,6 +2,7 @@ import os
 import sys
 from pyfiglet import figlet_format
 from simple_term_menu import TerminalMenu
+import getpass
 
 def create_files(paths):
 
@@ -75,3 +76,23 @@ def success_prompt(path, names, s):
         return
     else:
         sys.exit()
+
+def get_common_paths():
+    user = getpass.getuser()
+    if sys.platform.startswith("win"):
+        common_paths = [
+            f"C:\\Users\\{user}\\Documents",
+            f"C:\\Users\\{user}\\Pictures",
+            f"C:\\Users\\{user}\\Desktop",
+            f"C:\\Users\\{user}\\Downloads"
+        ]
+    else:
+        common_paths = [
+            f"/home/{user}/Documents",
+            f"/home/{user}/Downloads",
+            f"/home/{user}/Desktop",
+            f"/home/{user}/Pictures"
+        ]
+    common_paths.append("Enter custom path")
+    common_paths.append("Back")
+    return common_paths

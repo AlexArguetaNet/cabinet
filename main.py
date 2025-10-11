@@ -1,5 +1,5 @@
 from util import create_files, create_folders, validate_path, path_exists
-from util import write_to_file, create_menu, clear, success_prompt
+from util import write_to_file, create_menu, clear, success_prompt, get_common_paths
 
 def main():
     while True:
@@ -21,10 +21,12 @@ def main():
 def files_menu():
     option = create_menu("Files", ["Create new files", "Write to file", "Back"])
     if option == 0:
-        print("Enter path to create files: ", end="")
         path_name = get_path()
         if path_name == None: return
+        print("Enter file names below:\n")
         file_paths, names = get_new_paths(path_name, "file")
+
+        if file_paths == None: return
         create_files(file_paths)
         success_prompt(path_name, names, "files")
     elif option == 1:
@@ -33,14 +35,15 @@ def files_menu():
     else:
         return
 
-
 def folders_menu():
     option = create_menu("Folders", ["Create new folders", "Add files to folder", "Back"])
     if option == 0:
-        print("Enter path to create folders: ", end="")
         path_name = get_path()
         if path_name == None: return
+        print("Enter folder names below:\n")
         folder_paths, names = get_new_paths(path_name, "folder")
+
+        if folder_paths == None: return
         create_folders(folder_paths)
         success_prompt(path_name, names, "folders")
     elif option == 1:
@@ -50,14 +53,23 @@ def folders_menu():
         pass
 
 def get_path():
-    while True:
-        try:
-            path_name = input()  
-            if validate_path(path_name) != None:
-                return path_name
+    common_paths = get_common_paths()
+    selected_option = create_menu("Enter path", common_paths)
 
-        except KeyboardInterrupt:
-            return None
+    if selected_option == 5:
+        return None
+    elif selected_option == 4:
+        while True:
+            try:
+                path_name = input()  
+                if validate_path(path_name) != None:
+                    return path_name
+    
+            except KeyboardInterrupt:
+                return None
+    else:
+        return common_paths[selected_option]
+    
 
 def get_new_paths(path, s):
     paths = []
@@ -77,7 +89,7 @@ def get_new_paths(path, s):
         except ValueError:
             continue
         except KeyboardInterrupt:
-            return
+            return None
 
 
 if __name__ == "__main__":
