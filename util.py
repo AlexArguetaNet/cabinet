@@ -67,9 +67,10 @@ def clear():
 
 def success_prompt(path, names, s):
     clear()
-    names_str = ""
+    names_str = "\n"
     for name in names:
         names_str = f"{names_str}\n- {name}"
+    names_str = f"{names_str}\n"
 
     menu = TerminalMenu(["Continue", "Exit"], 
                         title=f"Success!\nThe following {s} have been created in {path}:{names_str}")
