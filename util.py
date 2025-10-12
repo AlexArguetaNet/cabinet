@@ -5,14 +5,12 @@ from simple_term_menu import TerminalMenu
 import getpass
 
 def create_files(paths):
-
     for path in paths:
         with open(path, "a"):
             pass
     return True
 
 def create_folders(paths):
-
     for path in paths:
         os.mkdir(path)
     return True
@@ -39,6 +37,7 @@ def path_exists(path, paths, s):
         return False
 
 def write_to_file(file_path):
+    print("\nBegin typing to file. Press ctrl+c to exit:\n")
     try:
         with open(file_path, "w") as file:
             while True:
@@ -100,3 +99,8 @@ def get_common_paths():
     common_paths.append("Enter custom path")
     common_paths.append("Back")
     return common_paths
+
+def overwrite_prompt():
+    menu = TerminalMenu(["Yes", "No"], title="\nOverwrite?\n")
+    selected_index = menu.show()
+    return selected_index

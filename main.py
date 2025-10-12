@@ -1,5 +1,6 @@
 from util import create_files, create_folders, validate_path, path_exists
 from util import write_to_file, create_menu, clear, success_prompt, get_common_paths
+from util import overwrite_prompt
 
 def main():
     clear() # Clear terminal (For aesthetic purposes ;D)
@@ -23,21 +24,32 @@ def files_menu():
     option = create_menu("Files", ["Create new files", "Write to file", "Back"])
     if option == 0:
         path_name = get_path()
-        if path_name == None:
+        if not path_name:
             clear() 
             return
         
         print("Enter file names below:\n")
-        file_paths, names = get_new_paths(path_name, "file")
+        file_paths, names = get_new_paths(path_name, "file", 0)
 
-        if file_paths == None: 
+        if not file_paths: 
             clear()
             return
         create_files(file_paths)
         success_prompt(path_name, names, "files")
     elif option == 1:
-        file_path = input("Enter file path: ")
-        write_to_file(file_path)
+        path = get_path()
+        if not path:
+            clear() 
+            return
+        
+        file_path = get_new_paths(path, "file", 1)
+        
+        if not file_path:
+            clear()
+            return
+        else:
+            write_to_file(file_path)
+        clear()
     else:
         return
 
@@ -45,14 +57,14 @@ def folders_menu():
     option = create_menu("Folders", ["Create new folders", "Add files to folder", "Back"])
     if option == 0:
         path_name = get_path()
-        if path_name == None: 
+        if not path_name: 
             clear()
             return
         
         print("Enter folder names below:\n")
-        folder_paths, names = get_new_paths(path_name, "folder")
+        folder_paths, names = get_new_paths(path_name, "folder", 0)
 
-        if folder_paths == None:
+        if not folder_paths:
             clear() 
             return
         create_folders(folder_paths)
@@ -82,7 +94,7 @@ def get_path():
         return common_paths[selected_option]
     
 
-def get_new_paths(path, s):
+def get_new_paths(path, s, n):
     paths = []
     names = []
     while True:
@@ -92,11 +104,21 @@ def get_new_paths(path, s):
                 return paths, names
             
             if not path_exists(f"{path}/{name}", paths, s):
-                paths.append(f"{path}/{name}")
-                names.append(name)
+                if n == 1:
+                    return f"{path}/{name}"
+                else:
+                    paths.append(f"{path}/{name}")
+                    names.append(name)
             else:
-                continue
-
+                if n == 1:
+                    selected_option = overwrite_prompt()
+                    if selected_option == 0:
+                        return f"{path}/{name}"
+                    else:
+                        return None
+                else:
+                    continue
+            
         except ValueError:
             continue
         except KeyboardInterrupt:
